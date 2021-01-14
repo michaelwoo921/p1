@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Grubdash Homepage</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+		<link rel="stylesheet" href="/css/trms.css" />
+	</head>
+	<body>
+        <div class='container'>
+			<header class="row trms-container">
+				<nav class="nav">
+					<p id="user"></p>
+					<button class="nav-item" href="">Login</button>
+				</nav>
+				
+			</header>
+			<div class="row trms-container">
+				<div class="col-12 col-md-8 trms-body">
+					<h1> Tuition Reimbursement Management System</h1>
+					<p> We invest in our employee's professional development</p>
+					<div>
+						<img  class="trms-img" src="/images/j-kelly-brito-PeUJyoylfe4-unsplash.jpg"  />
+						<span style="font-size: 8px;">Photo by <a href="https://unsplash.com/@hellokellybrito?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">J. Kelly Brito</a> on <a href="https://unsplash.com/s/photos/education?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+					</div>
+					
+				</div>
+				<div class="col-12 col-md-4 trms-form">
+					<h2 class="trms-form-heading mb-3"> Tuition Reimbursement</h2>
+					<div>
+						<div class="mb-3">
+						  <label for="username" class="form-label">username</label>
+						  <input type="text" class="form-control" id="username" name="username">
+						</div>
+						<div class="mb-3">
+						  <label for="password" class="form-label">Password</label>
+						  <input type="password" class="form-control" id="password" name="password">
+						</div>
+						<button id="submit" type="submit" class="btn btn-primary">Login</button>
+					</div>
+				</div>
+			</div>
+			<div id="user"></div>
+			<script src="/js/login.js"></script>
+		
+			<p id="user"></p>
+
+
+		<header>
+			<h1> Tuition Reimbursement Management System</h1>
+			<p> Employee: $1000 each year </p>
+			<h2> Event types </h2>
+			<p> University courses 80%</p>
+			<p> Seminars 60%</p>
+			<p> Certification Preparation Classes 75%</p>
+			<p> Certification 100%</p>
+			<p> Technical Training 90%</p>
+			<p> Others 30%</p>
+			<h2> After Benco Approval:</h2>
+			<p> passing grade </p>
+			<p> or presentation over the event</p>
+			<p> available reimbursement = total reimbursement - pending reim - awarded reim</p>
+			<p> projected reim is smaller than available reim</p>
+		</header>
+		<section>
+			<h2> Tution Reimbursement Form </h2>
+			<p>should be  completed  one week prior to the start of the event</p>
+			<p> basic employee info, date, time , location, description, cost, grading format, type of event, work related justification</p>
+			<p> optional: file attachment (pdf, png, jpeg, txt, doc, attachment of approvals already given .msg (outlook email file), type of approval, work time to be missed</p>
+			<p> projected reimbursement : read-only field</p>
+		</section>
+
+		<section>
+			<h3> Business Rules</h3>
+			<p> Grading format from reference table</p>
+			<p> some grading format: presentation to management after event completion and prior to awarded reimbursement</p>
+			<p> provide a passing grade  or use default passing grade if unknown</p>
+			<p> approval email then that approval step is skipped</p>
+			<p> request is marked urgent if the course is less tahn 2 weeks from the start</p>
+		</section>
+		<section>
+			<h2> Direct supervisor approval</h2>
+			<p> supervisor can request additional info from the employee before approval</p>
+			<p>must  provide the reason for denial</p>
+			<p> direct supervisor is department head then one approval skipped</p>
+			<p> not approved in a timely manner then auto approval</p>
+		</section>
+		<section> 
+			<h2> Department Head Approval</h2>
+			<p> can request addition info from direct supervisor or employee before approval</p>
+			<p> not approved in a timely manner then auto approved</p>
+		</section>
+		<section>
+			<h2> BenCo Approval</h2>
+			<p> cannot be skipped</p>
+			<p> can ask additional info from the employee, supervisor, head</p>
+			<p> can change the reimbursement amount then should be notified and given the option to cancel</p>
+			<p> not approved in a timely manner then escalation email should be sent to Benco's direct supervisor</p>
+			<p> Benco can award the amount  more than the available amount: must provide reason and marked as exceeding available funds for reporting purposes</p>
+		</section>
+		<section>
+			<h2> Grade/Presentation upload</h2>
+			<p> attach grade or presentation</p>
+			<p> after grade upload: Benco must confirm </p>
+			<p> after presentation upload: the direct supervisor confirm that the presentation is satisfactory and presented to the appropriate parties</p>
+			<p> Upon confirmation, the amount is awarded to the requestor</p>
+			<p> Only interested party has access the grade/presentation: requestor and approver</p>
+		</section>
+
+		</div>
+
+
+		<script src="/js/addtrms.js"></script>
+		<script src="/js/nav.js"></script>
+        <script src="/js/trms.js"></script>
+	</body>
+</html>
