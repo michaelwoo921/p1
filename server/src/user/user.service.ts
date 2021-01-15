@@ -12,7 +12,7 @@ class UserService {
 
     async getUsers(): Promise<User[]> {
         const params = {
-            TableName: 'users'
+            TableName: 'p1-users'
         };
         return await this.doc.scan(params).promise().then((data) => {
             return data.Items as User[];

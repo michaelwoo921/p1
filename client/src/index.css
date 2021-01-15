@@ -1,0 +1,27 @@
+
+
+
+
+body {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    background-color: rgb(9, 102, 102);
+}
+
+.routing-nav {
+    background-color: rgb(9, 102, 102);
+    margin: 0;
+    padding: 0;
+}
+.routing-nav ul {
+    display: flex;
+    background-color: rgb(9, 102, 102);
+    list-style: none;
+}
+
+.routing-nav ul li {
+    padding: 0 10px;
+}
+
+.routing-nav .nav-link {
+    color: white;
+}
