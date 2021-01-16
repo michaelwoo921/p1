@@ -7,25 +7,27 @@ const router = express.Router();
 
 
 router.get('/', (req: any, res, next) => {
-
-  if(!req.session.user){
-    res.sendStatus(401);
-  }
   let u = {...req.session.user};
   logger.debug(u);
-  user.login(u.name, u.password).then(user =>{
-    if(!user){
-      res.sendStatus(401);
-    }
-    req.session.user =user;
-    res.send(JSON.stringify(user));
-  });
+  if(u.name && u.password ){
+    user.login(u.name, u.password).then(user =>{
+      if(!user){
+        res.sendStatus(401);
+      }
+      req.session.user =user;
+      res.send(JSON.stringify(user));
+    });
+  }
+  else {
+    res.sendStatus(401);
+  }
+ 
  
 });
 
 router.post('/', function(req: any, res, next) {
-  logger.debug(req.body);
-  user.login(req.body.username, req.body.password).then((user) => {
+  logger.debug(req.body, 'req.body');
+  user.login(req.body.name, req.body.password).then((user) => {
     if(user === null) {
       res.sendStatus(401);
     }
@@ -43,15 +45,15 @@ router.delete('/', (req, res, next) => {
 
 
 router.put('/', async function(req: any,res,next){
-  if(!req.session.user){
-    res.sendStatus(401);
-  }
     let u= {...req.session.user};
-    u.fund = u.fund + 1000;  // update item
+    if(typeof(u.fund) === 'number')
+      {
+        u.fund = u.fund + 1000;  // update item
+      }
     logger.debug(u);
-    if(u.name && u.password){
-      await user.updateUser(u);
-      setTimeout(()=> { res.redirect('/users');}, 1000);
+    if(typeof(u.name)=== 'string' && typeof(u.password) === 'string' && u.name !=='' && u.password !== ''){
+        await user.updateUser(u);
+        setTimeout(()=> { res.redirect('/users');}, 1000);
     }
     else{
       res.sendStatus(401);

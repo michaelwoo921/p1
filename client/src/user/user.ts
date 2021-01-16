@@ -2,7 +2,7 @@
 
 let currentYear: number = (new Date()).getFullYear();
 export class User {   
-    username='';
+    name='';
     password='';
     role='';     // Employee, Supervisor, DeptHead, Benco, BencoSupervisor
     year=currentYear;

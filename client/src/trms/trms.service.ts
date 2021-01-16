@@ -12,7 +12,10 @@ class TrmsService {
         return axios.get(this.URI).then(result => result.data);
     }
     getTrms(nam: string, dt: string): Promise<Trms> {
-        return axios.get(this.URI+'/'+nam + '/'+dt).then(result=>result.data);
+        return axios.get(this.URI+'/'+nam + '/'+dt).then(result=>{
+            console.log(JSON.stringify(result.data), 'getTrms data');
+           return result.data;
+        });
     }
     addTrms(t: Trms): Promise<null> {
         return axios.post(this.URI, t).then(result => null);

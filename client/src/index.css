@@ -25,3 +25,7 @@ body {
 .routing-nav .nav-link {
     color: white;
 }
+.routing-nav button {
+    color: white;
+    background-color: rgb(9, 102, 102);
+}

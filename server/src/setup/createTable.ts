@@ -1,6 +1,7 @@
 import * as AWS from 'aws-sdk';
 import userService from '../user/user.service';
 import trmsService from '../trms/trms.service';
+import { Trms } from '../trms/trms';
 
 
 // Set the region
@@ -48,7 +49,7 @@ const trmsSchema ={
             AttributeType: 'S'
         },
         { 
-            AttributeName: 'date',
+            AttributeName: 'date_created',
             AttributeType: 'S'
         },
 
@@ -59,7 +60,7 @@ const trmsSchema ={
             KeyType: 'HASH'
         },
         {
-            AttributeName: 'date',
+            AttributeName: 'date_created',
             KeyType: 'RANGE'
         },
 
@@ -127,7 +128,7 @@ function populateUserTable() {
     userService.addUser({name: 'Benco', password: 'pass', role: 'Benco', year: currentYear, supName: 'King', fund: undefined}).then(()=>{});
     userService.addUser({name: 'King', password: 'pass', role: 'BencoSup', year: currentYear, supName: undefined, fund: undefined}).then(()=>{});
     userService.addUser({name: 'Michael', password: 'pass', role: 'Employee', year: currentYear, supName: 'Richard', fund: 1000}).then(()=>{});
-    userService.addUser({name: 'Richard', password: 'pass', role: 'SuperVisor', year: currentYear, supName: 'David', fund: 1000}).then(()=>{});
+    userService.addUser({name: 'Richard', password: 'pass', role: 'Supervisor', year: currentYear, supName: 'David', fund: 1000}).then(()=>{});
 }
 
 
@@ -137,19 +138,20 @@ function populateTrmsTable() {
     }
 
     trmsService.addTrms(
-        {name: 'Michael', date: formatDate(new Date()), start_date: '2020-05-12', location: '',
+        {name: 'Michael', date_created: formatDate(new Date()), event_start_date: '2020-05-12', event_location: '',
         supervisor_name: 'Richard',
-         description: '', cost: 500, grading_format: '', event_type: '', justification: '', pro_reimbursement: 320
+         event_description: '',event_name: '',   event_cost: 500,  event_type: '', justification: '', pro_reimbursement: 320
         }
     );
     trmsService.addTrms(
-        {name: 'Elisa', date: formatDate(new Date()), start_date: '2020-05-12', location: '',
-        supervisor_name: 'Susan',
-            description: '', cost: 500, grading_format: '', event_type: '', justification: '', pro_reimbursement: 320
+        {name: 'Elisa', date_created: formatDate(new Date()), event_start_date: '2020-05-12', event_location: '',
+        supervisor_name: 'Susan', event_name: '', 
+            event_description: '', event_cost: 500, event_grading_format: '', event_type: '', justification: '', pro_reimbursement: 320
         }
     );
      
+    trmsService.addTrms(new Trms("Richard", '2021-04-15'));
 
 
 
-    }
+}

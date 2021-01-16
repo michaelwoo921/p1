@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Route, Link, Redirect, useLocation } from 'react-router-dom';
 
 import LoginComponent from './user/login.component';
-import TrmssComponent from './trms/trmss.component';
+import TrmsComponent from './trms/trms.component';
 import userService from './user/user.service';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,6 +13,8 @@ import  AddTrmsComponent from './trms/add.trms.component';
 import  DeleteTrmsComponent from './trms/delete.trms.component';
 import  UpdateTrmsComponent from './trms/update.trms.component';
 import  ApproveTrmsComponent from './trms/approve.trms.component';
+import TrmsDetailComponent from './trms/trmsdetail.component';
+import TableComponent from './trms/table.component';
 
 
 export default function RouterComponent() {
@@ -36,26 +38,46 @@ export default function RouterComponent() {
                 </button>
                 <div className={`${isNavOpen ? '' : 'collapse' } navbar-collapse`} id="navbarNav">
                 <ul className="navbar-nav">
-                    <li className="nav-item">
-                        <Link  className='nav-link' to='/addTrms' > Create Form    </Link>
-                    </li>
+                    {user.role==='Employee' && (
+                        <li className="nav-item">
+                          <Link  className='nav-link' to='/addTrms' > Create Form    </Link>
+                      </li>
+                    )}
+                  
                     <li className="nav-item">
                     <Link to='/trmss' className='nav-link'> View All Forms    </Link>
                     </li>
                     <li className="nav-item">
-                    <Link to='/' className='nav-link' > Login/Logout    </Link>
+                        {user.name ? (
+                            <Link to='/' className='nav-link' onClick={logout}>
+                                Logout: {JSON.stringify(user)}
+                            </Link>
+                        ) : (
+                            <Link to='/' className="nav-link">Login</Link>
+                        )}
                     </li>
+                    <li className="nav-item">
+                    <Link to='/Michael/2021-01-18' className='nav-link' > Michael 2021-01-18   </Link>
+                    </li>
+                
+
                 </ul>
                 </div>
             </div>
             </nav>
             <div>
                 <Route exact path='/' component={LoginComponent} />
-                <Route exact path='/trmss' component={TrmssComponent} />
                 <Route exact path='/addTrms' component={AddTrmsComponent} />
+                <Route
+                    exact
+                    path='/trmss/:nam/:dt'
+                    component={TrmsDetailComponent}
+                />
+                <Route exact path='/trmss' component={TableComponent} />
                 <Route exact path='/trmss/:nam/:dt/delete' component={DeleteTrmsComponent} />
                 <Route exact path='/trmss/:nam/:dt/update' component={UpdateTrmsComponent} />
-                <Route exact path='/trmss/:nam/:dt/approve' component={ApproveTrmsComponent}/>           
+                <Route exact path='/trmss/:nam/:dt/approve' component={ApproveTrmsComponent}/>   
+
             </div>
 
         </div>

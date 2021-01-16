@@ -23,6 +23,9 @@ export class User {
 
 export async function login(name: string, password: string): Promise<User|null> {
     logger.debug(`${name +' '+ password}`);
+    if( name ==='' || password===''){
+        return null;
+    }
     return await userService.getUserByName(name).then((user)=> {
         if (user && user.password === password) {
             return user
@@ -32,8 +35,8 @@ export async function login(name: string, password: string): Promise<User|null> 
     });
 }
 
-export function register(username: string, password: string, role: string,  callback: Function, supName?: string, fund?: number) {
-    userService.addUser(new User(username, password, role, currentYear, supName , fund)).then((res) => {
+export function register(name: string, password: string, role: string,  callback: Function, supName?: string, fund?: number) {
+    userService.addUser(new User(name, password, role, currentYear, supName , fund)).then((res) => {
         logger.trace(res);
         callback();
     }).catch((err) => {

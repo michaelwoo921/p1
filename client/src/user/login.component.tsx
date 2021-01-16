@@ -15,8 +15,8 @@ function LoginComponent() {
 
     function handleFormInput(e: SyntheticEvent) {
         let u: any = { ...user };
-        if((e.target as HTMLInputElement).name === 'username'){
-            u.username = (e.target as HTMLInputElement).value;
+        if((e.target as HTMLInputElement).name === 'name'){
+            u.name = (e.target as HTMLInputElement).value;
         } else {
             u.password = (e.target as HTMLInputElement).value;
         }
@@ -47,12 +47,12 @@ function LoginComponent() {
              <h2 className="trms-form-heading mb-3"> Tuition Reimbursement</h2>
              <div>
                  <div className="mb-3">
-                   <label htmlFor="username" className="form-label">username</label>
-                   <input type="text" className="form-control" id="username" name="username"/>
+                   <label htmlFor="name" className="form-label">username</label>
+                   <input type="text" className="form-control" id="name" name="name" onChange={handleFormInput} />
                  </div>
                  <div className="mb-3">
                    <label htmlFor="password" className="form-label">Password</label>
-                   <input type="password" className="form-control" id="password" name="password"/>
+                   <input type="password" className="form-control" id="password" name="password" onChange={handleFormInput}/>
                  </div>
                  <button id="submit" type="submit" className="btn btn-primary" onClick={submitForm}>
                      Login</button>

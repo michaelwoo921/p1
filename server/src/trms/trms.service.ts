@@ -27,7 +27,7 @@ class TrmsService{
             TableName: 'p1-trms',
             Key: {
                 'name': nam,
-                'date': dt
+                'date_created': dt
             }
         }
         return await this.doc.get(params).promise().then((data) => {
@@ -45,21 +45,19 @@ class TrmsService{
             TableName: 'p1-trms',
             Key: {
                 'name': trms.name,
-                'date': trms.date
+                'date_created': trms.date_created
             },
             UpdateExpression: 
-            'set #sup_approval=:s, #head_approval=:h, #benco_approval=:b, #pro_reimbursement=:p',
+            'set #approval=:ap, #pro_reimbursement=:p, #event_cost =:ec',
             ExpressionAttributeValues: {
-                ':s': trms.sup_approval,
-                ':h': trms.head_approval,
-                ':b': trms.benco_approval,
+                ':ap': trms.approval,
                 ':p': trms.pro_reimbursement,
+                ':ec': trms.event_cost
             },
             ExpressionAttributeNames: {
-                '#sup_approval': 'sup_approval', 
-                '#head_approval':  'head_approval', 
-                '#benco_approval': 'benco_approval', 
+                '#approval': 'approval', 
                 '#pro_reimbursement': 'pro_reimbursement',
+                '#event_cost': 'event_cost'
             },
             ReturnValue: 'UPDATED_NEW'
         };
@@ -79,14 +77,14 @@ class TrmsService{
         const params = {
             TableName: 'p1-trms',
             Item: datayorb,
-            ConditionExpression: '#name <> :name AND #d <> :date',
+            ConditionExpression: '#name <> :name AND #d <> :date_created',
             ExpressionAttributeNames: {
                 '#name': 'name',
-                '#d': 'date'
+                '#d': 'date_created'
             },
             ExpressionAttributeValues: {
                 ':name': datayorb.name,
-                ':date': datayorb.date
+                ':date_created': datayorb.date_created
             }
         }
         return await this.doc.put(params).promise()
@@ -110,7 +108,7 @@ class TrmsService{
             TableName: 'p1-trms',
             Key: {
                 'name': name,
-                'date': date
+                'date_created': date
             }
         }
         return await this.doc.delete(params).promise().then((data) => {
