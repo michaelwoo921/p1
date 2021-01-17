@@ -25,7 +25,7 @@ export default function TrmsDetailComponent(
     const history = useHistory();
 
     useEffect(()=>{
-        console.log(props.match.params, '----------params');
+        console.log(props.match.params);
     
         trmsService.getTrms(props.match.params.nam, props.match.params.dt).then((trms)=> {
             console.log(trms);

@@ -1,4 +1,4 @@
-import { SyntheticEvent } from 'react';
+import { SyntheticEvent, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { connect, ConnectedProps } from 'react-redux';
 import { TrmsState } from '../reducer';
@@ -8,6 +8,7 @@ import { changeTrms } from '../actions';
 import { Trms } from './trms';
 import formatDate from '../formatDate';
 import { eventRefTable } from '../eventRefTable';
+import userService from '../user/user.service';
 // This is the prop I want to connect from redux
 const trmsProp = (state: TrmsState) => ({trms: state.trms});
 // This is the dispatcher I want to use from redux
@@ -41,15 +42,53 @@ function AddTrmsComponent(props: PropsFromRedux) {
         });
     }
 
-    const FIELDS = ['name', 'supervisor_name', 'date_created', 'event_name', 'event_type', 'event_start_date',
+    const FIELDS_READONLY = ['name', 'supervisor_name', 'date_created'];
+    const FIELDS = ['event_name', 'event_start_date',
      'event_location', 
-    'event_description', 'event_cost', 'event_grading_format', 'pro_reimbursement'
+    'event_description', 'justification', 'event_cost'
     ];
-
-
+    let weight =0;
     return (
         <div className='col trms card'>
-         
+            {FIELDS_READONLY.map((fieldName) => {
+                return (
+                    <div key={'input-field-' + fieldName}>
+                        <label>{fieldName}</label>
+                        <input
+                            type='text'
+                            className='form-control'
+                            name={fieldName}
+                            id={'tr_' + fieldName}
+                            value={(props.trms as any)[fieldName]}
+                        ></input>
+                    </div>
+                );
+            })}
+            <div key='input-field-event_type'>
+                <label>event_type</label>
+                <select id="event_type" name='event_type' onChange={handleFormInput} className='form-control'>
+                    {eventRefTable.map((item: any) => {
+                        if( props.trms['event_type']===item.type){
+                            weight= item.weight;
+                        } 
+                        return (
+                            <option value={item.type}>{item.type}
+                            </option>
+                        );
+                    })}
+                </select>
+            </div>
+                <div>
+                {eventRefTable.map((item: any) => {
+                        if( props.trms['event_type']===item.type){
+                            weight= item.weight;
+                        } 
+                        return null;
+                    })}
+                </div>
+            
+                     
+
             {FIELDS.map((fieldName) => {
                     return (
                         <div key={'input-field-' + fieldName}>
@@ -65,7 +104,24 @@ function AddTrmsComponent(props: PropsFromRedux) {
                         </div>
                     );
                 })}
-         
+            <div key='input-field-event_type'>
+                <label>event_grading_format</label>
+                <select id="event_grading_format" name='event_grading_format' className='form-control'>
+                    
+                    <option value='letter grade'>letter grade</option>
+                    <option value='presentation'> presentation </option>
+                   
+                </select>
+            </div>
+
+            <div key={'input-field-pro_reimbursement'}>
+                <label>Projected Reimbursement</label>
+                <input type='text'  className='form-control'
+                    name='pro_reimbursement'
+                    id='tr_pro_reimbursement'
+                    value={ props.trms['event_cost']*weight}
+                ></input>
+            </div>
             <button className='btn btn-primary' onClick={submitForm}>
                 Create Trms
             </button>

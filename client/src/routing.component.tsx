@@ -38,26 +38,27 @@ export default function RouterComponent() {
                 </button>
                 <div className={`${isNavOpen ? '' : 'collapse' } navbar-collapse`} id="navbarNav">
                 <ul className="navbar-nav">
-                    {user.role==='Employee' && (
+                    { (user.role==='Employee' || user.role==='Supervisor') && (
                         <li className="nav-item">
-                          <Link  className='nav-link' to='/addTrms' > Create Form    </Link>
+                          <Link  className='nav-link' to='/addTrms'  > Create Form    </Link>
                       </li>
                     )}
+
                   
-                    <li className="nav-item">
-                    <Link to='/trmss' className='nav-link'> View All Forms    </Link>
-                    </li>
+                    { (user.role) && (
+                            <li className="nav-item">
+                                 <Link to='/trmss' className='nav-link'> View All Forms    </Link>
+                             </li>
+                    )}
+                   
                     <li className="nav-item">
                         {user.name ? (
                             <Link to='/' className='nav-link' onClick={logout}>
-                                Logout: {JSON.stringify(user)}
+                                Logout
                             </Link>
                         ) : (
                             <Link to='/' className="nav-link">Login</Link>
                         )}
-                    </li>
-                    <li className="nav-item">
-                    <Link to='/Michael/2021-01-18' className='nav-link' > Michael 2021-01-18   </Link>
                     </li>
                 
 
@@ -67,7 +68,7 @@ export default function RouterComponent() {
             </nav>
             <div>
                 <Route exact path='/' component={LoginComponent} />
-                <Route exact path='/addTrms' component={AddTrmsComponent} />
+                <Route exact path='/addTrms' component={()=> <AddTrmsComponent />} />
                 <Route
                     exact
                     path='/trmss/:nam/:dt'

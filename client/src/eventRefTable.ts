@@ -1,8 +1,8 @@
-export const eventRefTable = { 
-    e1: ["University Courses", 0.8],
-    e2: ["Seminars", 0.6],
-    e3: ["Certification Preparation Classes", 0.75],
-    e4: ["Certification", 1],
-    e5: ["Technical Training", 0.9],
-    e6: ["Others", 0.3]
-}
+export const eventRefTable = [
+    { type: "University Courses", weight: 0.8 },
+    { type: "Seminars" , weight: 0.6 },
+    { type: "Certification Preparation Classes" , weight: 0.75 },
+    { type: "Certification" , weight: 1 },
+    { type: "Technical Training" , weight: 0.9 },
+   { type: "Others", weight: 0.3}
+]

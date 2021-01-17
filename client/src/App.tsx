@@ -31,8 +31,8 @@ function App() {
              
                 <button type="submit" onClick={() => setCond(!cond)}>Click me</button>
                 <div >{ cond? <a href="https://docs.google.com/document/d/10-npAabNmTablYkPSbwzwHTaiBfwGVOaziGbX-5NFBM/edit?usp=sharing">
-                    TRMS doc </a> : null}</div>
-                <div >{ cond? <TemporaryComponent /> : null}</div>
+                    TRMS doc and App.tsx</a> : null}</div>
+                <div >{ cond? <TemporaryComponent />  : null}</div>
                 
             </div>
 

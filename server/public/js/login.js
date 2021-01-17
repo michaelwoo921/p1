@@ -4,7 +4,7 @@ window.onload = () => {
 }
 
 async function login() {
-    let user = document.getElementById('username').value;
+    let user = document.getElementById('name').value;
     console.log(user);
     let pass = document.getElementById('password').value;
     console.log(pass);
@@ -13,7 +13,7 @@ async function login() {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({username: user , password: pass})
+        body: JSON.stringify({name: user , password: pass})
     });
     console.log(response.json());
     return response.json();

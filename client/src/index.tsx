@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {createStore, applyMiddleware, Store} from 'redux';
+import { composeWithDevTools} from 'redux-devtools-extension';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -11,7 +12,8 @@ import './index.css';
 import reducer, {AppState} from './reducer';
 import {AppAction} from './actions';
 
-const store: Store<AppState, AppAction> = createStore(reducer, applyMiddleware(thunk));
+
+const store: Store<AppState, AppAction> = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)));
 
 ReactDOM.render(
   <Provider store={store}>

@@ -3,7 +3,13 @@
 export default function(){
     return (
         <div>
-            <header>
+			<h3> p1-users:name, supName, password, role, year*, fund* </h3>
+			<p>Michael- Richard, Elisa - Susan - David - Benco- King  </p>
+			<p> Employee, Supervisor, DeptHead, Benco, BencoSup </p>
+			<p> p1-trms: name, date_created, event_name, event_type,  event_location, event-start_date, event_description, justification,
+				 event_cost, event_grading_format,  supervisor_name, pro_reimbursement,  approval: date, reason, status, type  </p>
+           
+		    <header>
 			<h1> Tuition Reimbursement Management System</h1>
 			<p> Employee: $1000 each year, reset each year </p>
 			<h2> Event types </h2>
