@@ -6,7 +6,7 @@ export default function(){
 			<h3> p1-users:name, supName, password, role, year*, fund* </h3>
 			<p>Michael- Richard, Elisa - Susan - David - Benco- King  </p>
 			<p> Employee, Supervisor, DeptHead, Benco, BencoSup </p>
-			<p> p1-trms: name, date_created, event_name, event_type,  event_location, event-start_date, event_description, justification,
+			<p> p1-trms: name, date_created, role,  event_name, event_type,  event_location, event-start_date, event_description, justification,
 				 event_cost, event_grading_format,  supervisor_name, pro_reimbursement,  approval: date, reason, status, type  </p>
            
 		    <header>

@@ -1,14 +1,16 @@
 import { SyntheticEvent, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { connect, ConnectedProps } from 'react-redux';
-import { TrmsState } from '../reducer';
+import { TrmsState, UserState } from '../reducer';
 import './trms.css';
 import trmsService from './trms.service';
 import { changeTrms } from '../actions';
 import { Trms } from './trms';
 import formatDate from '../formatDate';
 import { eventRefTable } from '../eventRefTable';
-import userService from '../user/user.service';
+import { useSelector} from 'react-redux';
+
+
 // This is the prop I want to connect from redux
 const trmsProp = (state: TrmsState) => ({trms: state.trms});
 // This is the dispatcher I want to use from redux
@@ -23,6 +25,8 @@ const connector = connect(trmsProp, mapDispatch);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function AddTrmsComponent(props: PropsFromRedux) {
+
+    const user = useSelector((state : UserState)=> state.user);
     // const FIELDS = ['name', 'date', 'start_date', 'location', 'cost'];
     const history = useHistory();
     // This function is going to handle my onChange event.
@@ -42,7 +46,8 @@ function AddTrmsComponent(props: PropsFromRedux) {
         });
     }
 
-    const FIELDS_READONLY = ['name', 'supervisor_name', 'date_created'];
+    const USER_FIELD =['name', 'role', 'supervisor_name', 'fund', 'date_created']
+    
     const FIELDS = ['event_name', 'event_start_date',
      'event_location', 
     'event_description', 'justification', 'event_cost'
@@ -50,7 +55,7 @@ function AddTrmsComponent(props: PropsFromRedux) {
     let weight =0;
     return (
         <div className='col trms card'>
-            {FIELDS_READONLY.map((fieldName) => {
+             {USER_FIELD.map((fieldName) => {
                 return (
                     <div key={'input-field-' + fieldName}>
                         <label>{fieldName}</label>
@@ -59,11 +64,12 @@ function AddTrmsComponent(props: PropsFromRedux) {
                             className='form-control'
                             name={fieldName}
                             id={'tr_' + fieldName}
-                            value={(props.trms as any)[fieldName]}
+                            value={ fieldName === 'date_created' ? formatDate(new Date()) : (user as any)[fieldName]}
                         ></input>
                     </div>
                 );
             })}
+
             <div key='input-field-event_type'>
                 <label>event_type</label>
                 <select id="event_type" name='event_type' onChange={handleFormInput} className='form-control'>

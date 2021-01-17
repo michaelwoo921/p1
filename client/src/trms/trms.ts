@@ -2,7 +2,8 @@
 export class Trms {
     name: string = '';
     supervisor_name: string='';
-    date_created: string= '';  // 2020-1-4 
+    date_created: string= '';
+    role='';  // 2020-1-4 
     event_name = '';
     event_type: string= '';
     event_start_date: string= ''; //2020-3-10

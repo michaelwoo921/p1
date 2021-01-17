@@ -2,6 +2,7 @@ import formatDate from '../formatDate';
 export class Trms {
     name: string = '';
     supervisor_name: string='';
+    role= '';
     date_created= formatDate(new Date());  // 2020-1-4 
     event_name = '';
     event_type: string= '';

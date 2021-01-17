@@ -12,7 +12,7 @@ export class User {
         public password: string,  
         public role: string,     // Employee, Supervisor, DeptHead, Benco, BencoSupervisor
         public year: number,
-        public supName: string | undefined,
+        public supervisor_name: string | undefined,
         public fund: number | undefined,
         
 
@@ -35,10 +35,9 @@ export async function login(name: string, password: string): Promise<User|null> 
     });
 }
 
-export function register(name: string, password: string, role: string,  callback: Function, supName?: string, fund?: number) {
-    userService.addUser(new User(name, password, role, currentYear, supName , fund)).then((res) => {
-        logger.trace(res);
-        callback();
+export function register(name: string, password: string, role: string,  callback: Function, supervisor_name?: string, fund?: number) {
+    userService.addUser(new User(name, password, role, currentYear, supervisor_name , fund)).then((res) => {
+        logger.trace(res);        callback();
     }).catch((err) => {
         logger.error(err);
         console.log('Error, this probably means that the username is already taken.')

@@ -122,13 +122,13 @@ ddb.deleteTable(removeTrms, function(err, data){
 
 function populateUserTable() {
     let currentYear: number = (new Date()).getFullYear();
-    userService.addUser({name: 'Elisa', password: 'pass', role: 'Employee', year: currentYear,  supName: 'Susan', fund: 1000}).then(()=>{});
-    userService.addUser({name: 'Susan', password: 'pass', role: 'Supervisor',  year: currentYear, supName: 'David', fund: 1000}).then(()=>{});
-    userService.addUser({name: 'David', password: 'pass',  role: 'DeptHead', year: currentYear,  supName: 'Benco', fund: undefined}).then(()=>{});
-    userService.addUser({name: 'Benco', password: 'pass', role: 'Benco', year: currentYear, supName: 'King', fund: undefined}).then(()=>{});
-    userService.addUser({name: 'King', password: 'pass', role: 'BencoSup', year: currentYear, supName: undefined, fund: undefined}).then(()=>{});
-    userService.addUser({name: 'Michael', password: 'pass', role: 'Employee', year: currentYear, supName: 'Richard', fund: 1000}).then(()=>{});
-    userService.addUser({name: 'Richard', password: 'pass', role: 'Supervisor', year: currentYear, supName: 'David', fund: 1000}).then(()=>{});
+    userService.addUser({name: 'Elisa', password: 'pass', role: 'Employee', year: currentYear,  supervisor_name: 'Susan', fund: 1000}).then(()=>{});
+    userService.addUser({name: 'Susan', password: 'pass', role: 'Supervisor',  year: currentYear, supervisor_name: 'David', fund: 1000}).then(()=>{});
+    userService.addUser({name: 'David', password: 'pass',  role: 'DeptHead', year: currentYear,  supervisor_name: 'Benco', fund: undefined}).then(()=>{});
+    userService.addUser({name: 'Benco', password: 'pass', role: 'Benco', year: currentYear, supervisor_name: 'King', fund: undefined}).then(()=>{});
+    userService.addUser({name: 'King', password: 'pass', role: 'BencoSup', year: currentYear, supervisor_name: undefined, fund: undefined}).then(()=>{});
+    userService.addUser({name: 'Michael', password: 'pass', role: 'Employee', year: currentYear, supervisor_name: 'Richard', fund: 1000}).then(()=>{});
+    userService.addUser({name: 'Richard', password: 'pass', role: 'Supervisor', year: currentYear, supervisor_name: 'David', fund: 1000}).then(()=>{});
 }
 
 
@@ -138,20 +138,24 @@ function populateTrmsTable() {
     }
 
     trmsService.addTrms(
-        {name: 'Michael', date_created: formatDate(new Date()), event_start_date: '2020-05-12', event_location: '',
+        {name: 'Michael', date_created: formatDate(new Date()), role: 'Employee', event_start_date: '2020-05-12', event_location: '',
         supervisor_name: 'Richard',
          event_description: '',event_name: '',   event_cost: 500,  event_type: '', justification: '', pro_reimbursement: 320
         }
     );
     trmsService.addTrms(
-        {name: 'Elisa', date_created: formatDate(new Date()), event_start_date: '2020-05-12', event_location: '',
+        {name: 'Elisa', date_created: formatDate(new Date()), role:'Employee', event_start_date: '2020-05-12', event_location: '',
         supervisor_name: 'Susan', event_name: '', 
             event_description: '', event_cost: 500, event_grading_format: '', event_type: '', justification: '', pro_reimbursement: 320
         }
     );
-     
-    trmsService.addTrms(new Trms("Richard", '2021-04-15'));
-
+    
+    trmsService.addTrms(
+        {name: 'Richard', date_created: formatDate(new Date()), role:'Supervisor', event_start_date: '2020-05-12', event_location: '',
+        supervisor_name: 'David', event_name: '', 
+            event_description: '', event_cost: 500, event_grading_format: '', event_type: '', justification: '', pro_reimbursement: 320
+        }
+    );
 
 
 }
