@@ -1,14 +1,10 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Trms } from './trms';
-import trmsService from './trms.service';
+
 import TrmsRow from './trms-row';
 import {TrmsState, UserState} from '../reducer'
-import { getTrmss, getUser, UserActions } from '../actions';
-import { thunkGetTrmss } from '../thunks';
-import { User } from '../user/user';
-
-
+import { thunkGetTrmss, thunkGetUser } from '../thunks';
 
 function groupIntoThrees(trmss: Trms[]): Trms[][] {
     let arr: Trms[][] = [];
@@ -26,22 +22,31 @@ export default function TableComponent() {
     // Get access to the dispatcher. Feed the dispatcher Actions for your Reducer.
     const dispatch = useDispatch();
 
-    // const user = useSelector((state: UserState )=> state.user);
-
+    const user = useSelector((state: UserState )=> state.user);
     useEffect(() => {
-        dispatch(thunkGetTrmss())
+        dispatch(thunkGetTrmss());
+        dispatch(thunkGetUser());
     }, [dispatch]);
+
+    let selectedTrmss = trmss.filter((item: Trms )=> {
+        if( (user.role === 'DeptHead') || (user.role === 'Benco') || (user.name ==='King')){
+            return item;
+        }
+        else if(user.role === 'Employee'){
+            return (item.name === user.name) ;
+        }
+        else {
+            // user.role === 'Supervisor'
+            return (item.supervisor_name === user.name) || (item.name === user.name);
+        } 
+        }
+        
+    );
 
     return (
         <section className='trmss container' id='trmss'>
-            <div> role -- name -- supervisor_name</div>
-            {trmss.map((item: Trms )=> {
-                return <div>{item.role}-- {item.name} --{item.supervisor_name} </div>
-            })}
-
-
-            {/* <div> {JSON.stringify(user)} </div> */}
-            {groupIntoThrees(trmss).map((value, index: number) => {
+        
+            {groupIntoThrees(selectedTrmss).map((value, index: number) => {
                 return (
                     <TrmsRow
                         key={'trms-row-' + index}

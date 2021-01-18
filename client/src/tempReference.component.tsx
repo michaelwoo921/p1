@@ -3,29 +3,35 @@
 export default function(){
     return (
         <div>
-			<h3> p1-users:name, supName, password, role, year*, fund* </h3>
-			<p>Michael- Richard, Elisa - Susan - David - Benco- King  </p>
-			<p> Employee, Supervisor, DeptHead, Benco, BencoSup </p>
-			<p> p1-trms: name, date_created, role,  event_name, event_type,  event_location, event-start_date, event_description, justification,
-				 event_cost, event_grading_format,  supervisor_name, pro_reimbursement,  approval: date, reason, status, type  </p>
+		
+			
+
            
 		    <header>
-			<h1> Tuition Reimbursement Management System</h1>
-			<p> Employee: $1000 each year, reset each year </p>
+			<h1> Tuition Reimbursement Management System; DONE</h1>
+			<h3> p1-users:name, password, supervisor_name,  role, year*, fund* </h3>
+			<p> Employee, Supervisor: $1000 each year, reset each year </p>
+				
+			<p> Employee: Michael, Elisa, Chris, Supervisor: Richard, Jim,  DeptHead: David, Benco: Benco, BencoSup: King </p>
+			<h4> p1-trms: name, date_created, role,  event_name, event_type,  event_location, event-start_date, event_description, justification,
+				 event_cost, event_grading_format,  supervisor_name, pro_reimbursement</h4>
+				<p>   approval.sup, approval.head, approval.benco : date, name, status  </p>
+			
 			<h2> Event types </h2>
-			<p> University courses 80%</p>
-			<p> Seminars 60%</p>
-			<p> Certification Preparation Classes 75%</p>
-			<p> Certification 100%</p>
-			<p> Technical Training 90%</p>
-			<p> Others 30%</p>
-			<h2> After Benco Approval: pending</h2>
-			<p> passing grade or presentation over the event</p>
+			<p> University courses 80%--- Seminars 60%---Certification Preparation Classes 75%</p>
+			<p> Certification 100%---Technical Training 90%---Others 30%</p>
+
+			<p> projected reimbursement : read-only field</p>
+
+
+
+		</header>
+		<section>
+		<h2> After Benco Approval: pending</h2>
+			<p> grading_format: passing grade or presentation over the event</p>
 			<p> available reimbursement = total reimbursement - pending reim - awarded reim</p>
 			<p> projected reim is smaller than available reim</p>
 			<p> do not cover books</p>
-		</header>
-		<section>
 			<h2> Tution Reimbursement Form </h2>
 			<p>should be  completed  one week prior to the start of the event</p>
 			<p> basic employee info, date, time , location, description, cost, grading format, type of event, work related justification</p>
@@ -35,11 +41,12 @@ export default function(){
 				<li> work time to be missed
 					</li>
 					</ul>
-			<p> projected reimbursement : read-only field</p>
+			
 		</section>
 
 		<section>
 			<h3> Business Rules</h3>
+			<p> reimbursement done only once after benco Approval</p>
 			<p> Grading format from reference table</p>
 			<p> some grading format: presentation to management or passing grade prior to awarded reimbursement</p>
 			<p> passing grade cutoff date  or use default passing grade if unknown</p>

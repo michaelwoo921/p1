@@ -9,7 +9,8 @@ export enum TrmsActions {
 
 export enum UserActions {
     GetUser = 'GET_USER',
-    LoginChange = 'CHANGE_LOGIN'
+    LoginChange = 'CHANGE_LOGIN',
+
 }
 
 export interface AppAction {

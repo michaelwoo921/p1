@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { UserState } from '../reducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser, loginAction } from '../actions';
+import {currentYear } from '../constants';
 
 // Function Component
 function LoginComponent() {

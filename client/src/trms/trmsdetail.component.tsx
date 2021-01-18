@@ -26,6 +26,7 @@ export default function TrmsDetailComponent(
 
     useEffect(()=>{
         console.log(props.match.params);
+        console.log(JSON.stringify(userContext));
     
         trmsService.getTrms(props.match.params.nam, props.match.params.dt).then((trms)=> {
             console.log(trms);
@@ -44,14 +45,14 @@ export default function TrmsDetailComponent(
         <div className='col trms card'>
 
             <div className='card-body'>
-                <p className=''>{trms.name}</p>
-                <p className='deliverytime'>{trms.date_created}</p>
-                <p className='rating'>{trms.event_location}</p>
-                <p className='foodtype'>{trms.event_type}</p>
-                <p className='chef'>{trms.event_cost}</p>
+                <p className='name'>{trms.name}</p>
+                <p className='date_created'>{trms.date_created}</p>
+                <p className='event_location'>{trms.event_location}</p>
+                <p className='event_type'>{trms.event_type}</p>
+                <p className='event_cost'>{trms.event_cost}</p>
                 <div className='attachments'>
                     {' '}
-                    <label id='labelAttachment'>Attachment:</label>{' '}
+                    <label id='labelAttachment'>Attachments:</label>{' '}
                     { trms.attachments && trms.attachments.map((item) => {
                         return (
                             <div>
@@ -63,24 +64,17 @@ export default function TrmsDetailComponent(
                     }
                 </div>
                 <div className='approvals'>
-                    {' '}
-                    <label id='labelApproval'>Approval:</label>{' '}
-                    { trms.approval && trms.approval.map((item) => {
-                        return (
-                            <div>
-                                <div>{`${item.date}`}</div>
-                                <div>{`${item.status}`}</div>
-                                <div>{`${item.type}`}</div>
-                                <div>{`approval: ${item.reason}`}</div>
-                            </div>
-                        );
-                    })  
-                    }
+                    
+                    <label id='labelApproval'>Approval:</label>
+                    <h1> More work here</h1>
+                    
+              
+                    
                 </div>
 
                 <p className='cost'>{JSON.stringify(trms.event_cost)}</p>
             </div>
-            {userContext.role === 'Employee' && (
+            { ((userContext.role === 'Employee') || (userContext.role === 'Supervisor'))  && 
                 <>
                     <Link
                         className='btn btn-secondary'
@@ -88,11 +82,13 @@ export default function TrmsDetailComponent(
                     >
                         Update Trms
                     </Link>
-                    <button className='btn btn-danger' onClick={handleDelete}>
+                    { userContext.name === trms.name &&   <button className='btn btn-danger' onClick={handleDelete}>
                         Delete Trms
-                    </button>
+                    </button> 
+                    }
+                   
                 </>
-            )}
+            }
         </div>
     );
 }

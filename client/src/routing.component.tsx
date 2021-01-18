@@ -10,11 +10,11 @@ import { getUser } from './actions';
 import { UserState } from './reducer';
 import { User } from './user/user';
 import  AddTrmsComponent from './trms/add.trms.component';
-import  DeleteTrmsComponent from './trms/delete.trms.component';
 import  UpdateTrmsComponent from './trms/update.trms.component';
 import  ApproveTrmsComponent from './trms/approve.trms.component';
 import TrmsDetailComponent from './trms/trmsdetail.component';
 import TableComponent from './trms/table.component';
+
 
 
 export default function RouterComponent() {
@@ -28,8 +28,19 @@ export default function RouterComponent() {
             dispatch(getUser(new User()));
         });
     }
+    if(user.role==='Employee' || user.role ==='Supervisor'){
+        // let currentYear = Number( new Date().getFullYear());
+        // if(currentYear > user.year){
+        //     user.fund=1000;
+        //     user.year = currentYear;
+        //     setTimeout(()=> { userService.update(user);}, 1000);
+        // }
+    }
+
+    
     return (
         <div className='container-fluid'>
+            <div> {(JSON.stringify(user))}</div>
             <nav className="navbar navbar-expand-sm routing-nav">
             <div>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -52,12 +63,10 @@ export default function RouterComponent() {
                     )}
                    
                     <li className="nav-item">
-                        {user.name ? (
+                        {user.name && (
                             <Link to='/' className='nav-link' onClick={logout}>
-                                Logout
+                                {`${user.role}-- ${user.name} `}
                             </Link>
-                        ) : (
-                            <Link to='/' className="nav-link">Login</Link>
                         )}
                     </li>
                 
@@ -75,9 +84,7 @@ export default function RouterComponent() {
                     component={TrmsDetailComponent}
                 />
                 <Route exact path='/trmss' component={TableComponent} />
-                <Route exact path='/trmss/:nam/:dt/delete' component={DeleteTrmsComponent} />
                 <Route exact path='/trmss/:nam/:dt/update' component={UpdateTrmsComponent} />
-                <Route exact path='/trmss/:nam/:dt/approve' component={ApproveTrmsComponent}/>   
 
             </div>
 

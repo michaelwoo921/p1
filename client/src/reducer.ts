@@ -26,7 +26,7 @@ export const initialState: AppState = {
     user: new User(),
     trmss: [],
     trms: new Trms(),
-    loginUser: new User()
+    loginUser: new User(),
 }
 
 // Make sure that the reducer has a default argument of the inital state or it will not work.

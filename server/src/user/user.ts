@@ -14,6 +14,7 @@ export class User {
         public year: number,
         public supervisor_name: string | undefined,
         public fund: number | undefined,
+        public fund_available: number | undefined,
         
 
         ){ 
@@ -35,8 +36,8 @@ export async function login(name: string, password: string): Promise<User|null> 
     });
 }
 
-export function register(name: string, password: string, role: string,  callback: Function, supervisor_name?: string, fund?: number) {
-    userService.addUser(new User(name, password, role, currentYear, supervisor_name , fund)).then((res) => {
+export function register(name: string, password: string, role: string,  callback: Function, supervisor_name?: string, fund?: number, fund_available?: number) {
+    userService.addUser(new User(name, password, role, currentYear, supervisor_name , fund, fund_available)).then((res) => {
         logger.trace(res);        callback();
     }).catch((err) => {
         logger.error(err);

@@ -14,7 +14,12 @@ export class Trms {
     justification? ='';
     pro_reimbursement?: string|number;  //ready only
     attachments?: Attachment[]=[];
-    approval?: Approval[]=[];
+    approval={
+        sup: {status:'', date: '', reason: '', additional_info: '' }, 
+        head: {status: '', date: '', reason:'', additional_info: '' }, 
+        benco: {status: '', date: '', reason: '', additional_info: ''}
+    };
+
     time_off?: string[]=[];
 
     constructor(){
@@ -23,32 +28,6 @@ export class Trms {
 }
 
 
-
 export interface Attachment {
     type: string;
-}
-
-
-export interface Approval {
-    type: string;  // benco, supervisor, or head
-    date: string;  // if .msg included
-    status: string; // yes or no
-    reason? : string; // reason for denial if any
-}
-
-
-
-
-
-
-export interface Attachment {
-    type: string;
-}
-
-
-export interface Approval {
-    type: string;  // benco, supervisor, or head
-    date: string;  // if .msg included
-    status: string; // yes or no
-    reason? : string; // reason for denial if any
 }

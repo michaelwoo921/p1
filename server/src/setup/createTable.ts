@@ -122,13 +122,20 @@ ddb.deleteTable(removeTrms, function(err, data){
 
 function populateUserTable() {
     let currentYear: number = (new Date()).getFullYear();
-    userService.addUser({name: 'Elisa', password: 'pass', role: 'Employee', year: currentYear,  supervisor_name: 'Susan', fund: 1000}).then(()=>{});
-    userService.addUser({name: 'Susan', password: 'pass', role: 'Supervisor',  year: currentYear, supervisor_name: 'David', fund: 1000}).then(()=>{});
-    userService.addUser({name: 'David', password: 'pass',  role: 'DeptHead', year: currentYear,  supervisor_name: 'Benco', fund: undefined}).then(()=>{});
-    userService.addUser({name: 'Benco', password: 'pass', role: 'Benco', year: currentYear, supervisor_name: 'King', fund: undefined}).then(()=>{});
-    userService.addUser({name: 'King', password: 'pass', role: 'BencoSup', year: currentYear, supervisor_name: undefined, fund: undefined}).then(()=>{});
-    userService.addUser({name: 'Michael', password: 'pass', role: 'Employee', year: currentYear, supervisor_name: 'Richard', fund: 1000}).then(()=>{});
-    userService.addUser({name: 'Richard', password: 'pass', role: 'Supervisor', year: currentYear, supervisor_name: 'David', fund: 1000}).then(()=>{});
+    userService.addUser({name: 'Michael', password: 'pass', role: 'Employee', year: 2018, supervisor_name: 'Richard', fund: 600, fund_available: 600}).then(()=>{});
+    userService.addUser({name: 'Chris', password: 'pass', role: 'Employee', year: 2020, supervisor_name: 'Jim', fund: 800, fund_available: 800}).then(()=>{});
+    userService.addUser({name: 'Elisa', password: 'pass', role: 'Employee', year: currentYear,  supervisor_name: 'Jim', fund: 800, fund_available: 800}).then(()=>{});
+ 
+    userService.addUser({name: 'Jim', password: 'pass', role: 'Supervisor',  year: currentYear, supervisor_name: 'David', fund: 1000, fund_available: 1000}).then(()=>{});
+    userService.addUser({name: 'Richard', password: 'pass', role: 'Supervisor', year: currentYear, supervisor_name: 'David', fund: 1000, fund_available: 1000}).then(()=>{});
+
+    userService.addUser({name: 'David', password: 'pass',  role: 'DeptHead', year: currentYear,  
+    supervisor_name: 'Benco', fund: undefined, fund_available: undefined}).then(()=>{});
+    userService.addUser({name: 'Benco', password: 'pass', role: 'Benco', year: currentYear, 
+    supervisor_name: 'King', fund: undefined, fund_available: undefined}).then(()=>{});
+    userService.addUser({name: 'King', password: 'pass', role: 'BencoSup', 
+    year: currentYear, supervisor_name: '', fund: undefined, fund_available: undefined}).then(()=>{});
+
 }
 
 
@@ -138,22 +145,66 @@ function populateTrmsTable() {
     }
 
     trmsService.addTrms(
-        {name: 'Michael', date_created: formatDate(new Date()), role: 'Employee', event_start_date: '2020-05-12', event_location: '',
-        supervisor_name: 'Richard',
-         event_description: '',event_name: '',   event_cost: 500,  event_type: '', justification: '', pro_reimbursement: 320
+        {name: 'Michael', date_created: '2020-08-14', role: 'Employee', event_start_date: '2021-01-12', 
+        event_location: '',  supervisor_name: 'Richard', event_description: '',
+        event_name: 'AWS DynaoDB',   event_cost: 500,  event_type: 'Certification', 
+        justification: 'requires a good understanding of noSql DB to serve customers with better app experience',
+        approval: {
+            sup: {date: '', reason:'', status:'', additional_info: ''},
+            head: {date: '', reason:'', status:'', additional_info: ''},
+            benco: {date: '', reason:'', status:'', additional_info: ''}
         }
+    }
     );
+
+    trmsService.addTrms(
+        {name: 'Michael', date_created: '2020-08-25', role: 'Employee', event_start_date: '2021-01-12', 
+        event_location: '',  supervisor_name: 'Richard', event_description: '',
+        event_name: 'AWS DynaoDB',   event_cost: 500,  event_type: 'Certification', 
+        justification: 'requires a good understanding of noSql DB to serve customers with better app experience',
+        approval: {
+            sup: {date: '', reason:'', status:'', additional_info: ''},
+            head: {date: '', reason:'', status:'', additional_info: ''},
+            benco: {date: '', reason:'', status:'', additional_info: ''}
+        }
+    }
+    );
+
+    trmsService.addTrms(
+        {name: 'Michael', date_created: '2021-01-10', role: 'Employee', event_start_date: '2021-01-20', 
+        event_location: '',  supervisor_name: 'Richard', event_description: '',
+        event_name: 'AWS DynaoDB',   event_cost: 500,  event_type: 'Certification', 
+        justification: 'requires a good understanding of noSql DB to serve customers with better app experience',
+        approval: {
+            sup: {date: '', reason:'', status:'', additional_info: ''},
+            head: {date: '', reason:'', status:'', additional_info: ''},
+            benco: {date: '', reason:'', status:'', additional_info: ''}
+        }
+    }
+    );
+ 
     trmsService.addTrms(
         {name: 'Elisa', date_created: formatDate(new Date()), role:'Employee', event_start_date: '2020-05-12', event_location: '',
-        supervisor_name: 'Susan', event_name: '', 
-            event_description: '', event_cost: 500, event_grading_format: '', event_type: '', justification: '', pro_reimbursement: 320
+        supervisor_name: 'Jim', event_name: '', 
+            event_description: '', event_cost: 500, event_grading_format: '', event_type: '', justification: '', 
+            approval: {
+                sup: {date: '', reason:'', status:'', additional_info: ''},
+                head: {date: '', reason:'', status:'', additional_info: ''},
+                benco: {date: '', reason:'', status:'', additional_info: ''}
+            }
         }
     );
     
     trmsService.addTrms(
         {name: 'Richard', date_created: formatDate(new Date()), role:'Supervisor', event_start_date: '2020-05-12', event_location: '',
         supervisor_name: 'David', event_name: '', 
-            event_description: '', event_cost: 500, event_grading_format: '', event_type: '', justification: '', pro_reimbursement: 320
+            event_description: '', event_cost: 500, event_grading_format: '', event_type: '', justification: '', 
+            
+            approval: {
+                sup: {date: '', reason:'', status:'', additional_info: ''},
+                head: {date: '', reason:'', status:'', additional_info: ''},
+                benco: {date: '', reason:'', status:'', additional_info: ''}
+            }
         }
     );
 

@@ -1,9 +1,10 @@
 import { SyntheticEvent, useEffect } from 'react';
 import './trms.css';
 import trmsService from './trms.service';
+
 import {withRouter, useHistory} from 'react-router-dom';
 import { RouteComponentProps } from 'react-router-dom';
-import { TrmsState } from '../reducer';
+import { TrmsState, UserState } from '../reducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeTrms } from '../actions';
 import { Trms } from './trms';
@@ -17,6 +18,8 @@ interface Params {
 function UpdateTrmsComponent(props: RouteComponentProps<Params>) {
     const trmsSelector = (state: TrmsState) => state.trms;
     const trms = useSelector(trmsSelector);
+    const user = useSelector((state : UserState)=> state.user);
+    // alert(JSON.stringify(user));
     const dispatch = useDispatch();
     useEffect(()=>{
         console.log(props);
@@ -27,10 +30,13 @@ function UpdateTrmsComponent(props: RouteComponentProps<Params>) {
         })
     }, [dispatch, props, props.match.params.nam, props.match.params.dt]);
 
-    const FIELDS = ['name', 'supervisor_name', 'date_created', 'event_name', 'event_type', 'event_start_date',
+    const READFIELDS = ['name', 'supervisor_name', 'date_created', 'event_name', 'event_type', 'event_start_date',
     'event_location', 
-   'event_description', 'event_cost', 'event_grading_format', 'pro_reimbursement'
-   ];
+   'event_description', 'event_cost', 'event_grading_format'];
+   const UPDATEFIELDS = ['grade', 'comments'];
+   const UPDATEFIELDSBYSUP = ['approval', 'pro_reimbursement'];
+   const UPDATEFIELDSBYHEAD = ['approval'];
+   const UPDATEFIELDSBYBENCO = ['approval',  'reimbursement'];
    
     const history = useHistory();
     // This function is going to handle my onChange event.
@@ -52,7 +58,23 @@ function UpdateTrmsComponent(props: RouteComponentProps<Params>) {
     }
     return (
         <div className='col trms card'>
-            {FIELDS.map((fieldName) => {
+
+
+            {READFIELDS.map((fieldName) => {
+                return (
+                    <div key={'input-field-' + fieldName}>
+                        <label>{fieldName}</label>
+                        <input
+                            type='text'
+                            className='form-control'
+                            name={fieldName}
+                            id={'tr_' + fieldName}
+                            value={(trms as any)[fieldName]}
+                        ></input>
+                    </div>
+                );
+            })}
+                { (trms.name === user.name) &&  UPDATEFIELDS.map((fieldName) => {
                 return (
                     <div key={'input-field-' + fieldName}>
                         <label>{fieldName}</label>
@@ -63,15 +85,21 @@ function UpdateTrmsComponent(props: RouteComponentProps<Params>) {
                             id={'tr_' + fieldName}
                             value={(trms as any)[fieldName]}
                             onChange={handleFormInput}
-                            //placeholder='blabla'//{rest.fieldName}
                         ></input>
                     </div>
                 );
             })}
+          
+   
+
             <button className='btn btn-primary' onClick={submitForm}>
                 Update Trms
             </button>
         </div>
+
+
+
+
     );
 }
 

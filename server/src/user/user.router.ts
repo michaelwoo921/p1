@@ -46,17 +46,19 @@ router.delete('/', (req, res, next) => {
 
 router.put('/', async function(req: any,res,next){
     let u= {...req.session.user};
+    let current_year = new Date().getFullYear();
   logger.debug(u, 'before change')
-    if(req.body.reimbursement==='number'){
-      u.fund = u.fund - req.body.reimbursement;
-    }
-    if(req.body.year > u.year ){
+
+    //reset fund for the new year
+    if(Number(current_year)  > u.year ){
       u.fund=1000;
-      u.year = req.body.year;
+      u.year = current_year;
     }
 
     logger.debug(u, 'after change');
-    if(typeof(u.name)=== 'string' && typeof(u.password) === 'string' && u.name !=='' && u.password !== ''){
+    if(typeof(u.name)=== 'string' && typeof(u.password) === 'string' && u.name !=='' 
+    && u.password !== '' && req.body && req.body.fund){
+        u.fund= Number(req.body.fund);
         await user.updateUser(u);
         setTimeout(()=> { res.redirect('/users');}, 1000);
     }
