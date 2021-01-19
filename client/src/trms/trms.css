@@ -2,12 +2,23 @@
 	height:auto;
 	width:100%;
 }
+
+
 .card-body {
-	color: rgb(240, 114, 114);
-	border-style: inset;
-	text-align: center;
+	color: rgb(20, 15, 15);
+	background-color: rgb(150, 192, 202);
+
+	margin: 0;
+	text-align: left;
 	font-weight: bold;
+
 }
+
+.card-body input {
+	background-color: #96c0ca;
+}
+
+
 
 .menu {
 	text-align: center;
@@ -23,5 +34,5 @@
 
 #labelMenu {
 	font-size: 35px;
-	color:maroon
+	/* color:maroon */
 }

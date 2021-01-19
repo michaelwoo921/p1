@@ -42,37 +42,15 @@ export default function TrmsDetailComponent(
     }
 
     return (
-        <div className='col trms card'>
+        <div className='col trms card' style={{backgroundColor:  '#96c0ca'}}>
 
-            <div className='card-body'>
-                <p className='name'>{trms.name}</p>
-                <p className='date_created'>{trms.date_created}</p>
-                <p className='event_location'>{trms.event_location}</p>
-                <p className='event_type'>{trms.event_type}</p>
-                <p className='event_cost'>{trms.event_cost}</p>
-                <div className='attachments'>
-                    {' '}
-                    <label id='labelAttachment'>Attachments:</label>{' '}
-                    { trms.attachments && trms.attachments.map((item) => {
-                        return (
-                            <div>
-                                <div>{`${item.type}`}</div>
-                                <div>{`attachment: ${item.type}`}</div>
-                            </div>
-                        );
-                    })  
-                    }
-                </div>
-                <div className='approvals'>
-                    
-                    <label id='labelApproval'>Approval:</label>
-                    <h1> More work here</h1>
-                    
-              
-                    
-                </div>
-
-                <p className='cost'>{JSON.stringify(trms.event_cost)}</p>
+            <div className='card-body' style={{backgroundColor:  '#96c0ca'}}>
+                <p className='name'>Submitted by {trms.name} on {trms.date_created}</p>
+                <p className='event_location'>Event: {trms.event_location} starts on {trms.event_start_date}</p>
+                <p className='event_location'>Event type: {trms.event_type}</p>
+                <p>Event Cost ${trms.event_cost}, Projected Reimbursement ${ trms.pro_reimbursement}</p>
+                <p className='attachments'> {trms.attachments} </p>
+                
             </div>
             { ((userContext.role === 'Employee') || (userContext.role === 'Supervisor'))  && 
                 <>

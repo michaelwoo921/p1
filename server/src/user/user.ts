@@ -12,7 +12,7 @@ export class User {
         public password: string,  
         public role: string,     // Employee, Supervisor, DeptHead, Benco, BencoSupervisor
         public year: number,
-        public supervisor_name: string | undefined,
+        public supervisor_name: string|undefined,
         public fund: number | undefined,
         public fund_available: number | undefined,
         

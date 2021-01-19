@@ -145,10 +145,12 @@ function populateTrmsTable() {
     }
 
     trmsService.addTrms(
-        {name: 'Michael', date_created: '2020-08-14', role: 'Employee', event_start_date: '2021-01-12', 
-        event_location: '',  supervisor_name: 'Richard', event_description: '',
-        event_name: 'AWS DynaoDB',   event_cost: 500,  event_type: 'Certification', 
-        justification: 'requires a good understanding of noSql DB to serve customers with better app experience',
+        {name: 'Michael', date_created: '2020-08-14', role: 'Employee', event_start_date: '2021-01-15', 
+        event_end_date: '2021-01-15', 
+        event_location: '',  supervisor_name: 'Richard', event_description: 'Nosql database',
+        event_name: 'AWS DynaoDB',   event_cost: 500,  event_type: 'Certification', pro_reimbursement: 500,
+        justification: 'needed to serve customers better',
+        attachments: 'path/to/pdf', grade: 'A', comments: '',
         approval: {
             sup: {date: '', reason:'', status:'', additional_info: ''},
             head: {date: '', reason:'', status:'', additional_info: ''},
@@ -159,9 +161,11 @@ function populateTrmsTable() {
 
     trmsService.addTrms(
         {name: 'Michael', date_created: '2020-08-25', role: 'Employee', event_start_date: '2021-01-12', 
+        event_end_date:'2021-02-25',
         event_location: '',  supervisor_name: 'Richard', event_description: '',
-        event_name: 'AWS DynaoDB',   event_cost: 500,  event_type: 'Certification', 
-        justification: 'requires a good understanding of noSql DB to serve customers with better app experience',
+        event_name: 'Nodejs with TypeScript',   event_cost: 100,  event_type: 'Seminars', 
+        justification: 'implement rest api',
+        attachments: '', grade: '', comments: '',
         approval: {
             sup: {date: '', reason:'', status:'', additional_info: ''},
             head: {date: '', reason:'', status:'', additional_info: ''},
@@ -171,10 +175,13 @@ function populateTrmsTable() {
     );
 
     trmsService.addTrms(
-        {name: 'Michael', date_created: '2021-01-10', role: 'Employee', event_start_date: '2021-01-20', 
+        {name: 'Michael', date_created: '2021-01-10', role: 'Employee', event_start_date: '2021-02-20', 
+        event_end_date: '2021-04-15',
         event_location: '',  supervisor_name: 'Richard', event_description: '',
-        event_name: 'AWS DynaoDB',   event_cost: 500,  event_type: 'Certification', 
+        event_name: 'React Native with Redux',   event_cost: 500,  event_type: 'Certification Preparation Classes', 
+        pro_reimbursement:  375  ,
         justification: 'requires a good understanding of noSql DB to serve customers with better app experience',
+        attachments: '', grade: '', comments: '',
         approval: {
             sup: {date: '', reason:'', status:'', additional_info: ''},
             head: {date: '', reason:'', status:'', additional_info: ''},
@@ -184,9 +191,11 @@ function populateTrmsTable() {
     );
  
     trmsService.addTrms(
-        {name: 'Elisa', date_created: formatDate(new Date()), role:'Employee', event_start_date: '2020-05-12', event_location: '',
-        supervisor_name: 'Jim', event_name: '', 
-            event_description: '', event_cost: 500, event_grading_format: '', event_type: '', justification: '', 
+        {name: 'Elisa', date_created: formatDate(new Date()), role:'Employee', event_start_date: '2021-05-12', 
+        event_end_date: '2021-06-13', event_location: '',
+        supervisor_name: 'Jim', event_name: 'Postgres', 
+            event_description: '', event_cost: 500, event_grading_format: '', event_type: 'University Courses', justification: '', 
+            attachments: '', grade: '', comments: '',
             approval: {
                 sup: {date: '', reason:'', status:'', additional_info: ''},
                 head: {date: '', reason:'', status:'', additional_info: ''},
@@ -196,9 +205,11 @@ function populateTrmsTable() {
     );
     
     trmsService.addTrms(
-        {name: 'Richard', date_created: formatDate(new Date()), role:'Supervisor', event_start_date: '2020-05-12', event_location: '',
-        supervisor_name: 'David', event_name: '', 
+        {name: 'Richard', date_created: formatDate(new Date()), role:'Supervisor', event_start_date: '2021-05-12',
+        event_end_date: '2021-05-12', event_location: '',
+        supervisor_name: 'David', event_name: 'Augular', 
             event_description: '', event_cost: 500, event_grading_format: '', event_type: '', justification: '', 
+            attachments: '', grade: '', comments: '',
             
             approval: {
                 sup: {date: '', reason:'', status:'', additional_info: ''},

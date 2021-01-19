@@ -6,10 +6,10 @@ import './trms.css';
 import trmsService from './trms.service';
 import { changeTrms } from '../actions';
 import { Trms } from './trms';
-import formatDate from '../formatDate';
 import { eventRefTable } from '../eventRefTable';
 import { useSelector} from 'react-redux';
 import { letter_grade, presentation} from '../constants';
+import  formatDate, { calculateTimeLapseInDays} from '../formatDate';
 
 
 // This is the prop I want to connect from redux
@@ -40,27 +40,42 @@ function AddTrmsComponent(props: PropsFromRedux) {
         props.updateTrms(tr);
     }
     function submitForm() {
-        trmsService.addTrms(props.trms).then(() => {
-            props.updateTrms(new Trms());
-            // call the callback function from the parent component so that it will re-render
-            history.push('/trmss');
-        });
+        let timeLapse = calculateTimeLapseInDays(formatDate(new Date()), props.trms.event_start_date);
+        if(timeLapse <7){
+            alert('You have to submit at least 7 days before the event start date');
+        }
+        else {
+            alert('successfully created the form: ' + JSON.stringify(props.trms));
+            trmsService.addTrms(props.trms).then(() => {
+                props.updateTrms(new Trms());
+                // call the callback function from the parent component so that it will re-render
+                history.push('/trmss');
+            });
+
+
+        }
+     
     }
 
-    const USER_FIELD =['name', 'role', 'supervisor_name', 'date_created']
+    const USER_FIELDREAD =['name', 'role', 'supervisor_name', 'date_created']
     
     const FIELDS = ['event_description', 'event_location',  'event_cost', 'justification'];
     
+    const UPDATEFIELDS =['comments', 'grade', 'attachments', 'reimbursement' ]
     // default selection of event_type and event_grading_format
  
     let weight =0;
     // props.trms['event_type'] = eventRefTable[0].type;
     props.trms['event_grading_format'] = letter_grade;
     let fundAvailable = user.fund;
-
+    let  timeLapse: number = 14;
     return (
-        <div className='col trms card'>
-             {USER_FIELD.map((fieldName) => {
+        <div className='col trms card' style={{backgroundColor:  '#96c0ca'}}
+        >
+            <div className=" card-body">
+
+           
+             {USER_FIELDREAD.map((fieldName) => {
 
 
                 (props.trms as any)[fieldName] = 
@@ -94,11 +109,21 @@ function AddTrmsComponent(props: PropsFromRedux) {
                 ></input>
             </div>
 
+            <>
+            {eventRefTable.map((item: any) => {
+                    if( props.trms['event_type']===item.type){
+                        weight= item.weight;
+                    } 
+                    return null;
+                })}
+            </>
 
 
             <div key='input-field-event_type'>
                 <label>event_type</label>
-                <select id="event_type" name='event_type' onChange={handleFormInput} className='form-control'>
+                <select id="event_type" name='event_type' onChange={handleFormInput} 
+                className='form-control' style={{backgroundColor:  '#96c0ca'}}
+                 >
                     { 
                     eventRefTable.map((item: any) => {
                         if( props.trms['event_type']===item.type){
@@ -115,14 +140,7 @@ function AddTrmsComponent(props: PropsFromRedux) {
 
 
 
-            <div>
-            {eventRefTable.map((item: any) => {
-                    if( props.trms['event_type']===item.type){
-                        weight= item.weight;
-                    } 
-                    return null;
-                })}
-            </div>
+       
        
             <div key={'input-field-event_start_date'}>
                 <label>event_start_date</label>
@@ -136,7 +154,19 @@ function AddTrmsComponent(props: PropsFromRedux) {
                     onChange={handleFormInput}
                 ></input>
             </div>
-                     
+
+                <div key={'input-field-event_end_date'}>
+                <label>event_end_date</label>
+                <input
+                    type='text'
+                    className='form-control'
+                    name='event_end_date'
+                    id='tr_event_end_date'
+                    placeholder='enter in format: yyyy-mm-dd'
+                    value={(props.trms as any)['event_end_date']}
+                    onChange={handleFormInput}
+                ></input>
+            </div>  
 
             {FIELDS.map((fieldName) => {
                 return (
@@ -158,7 +188,8 @@ function AddTrmsComponent(props: PropsFromRedux) {
             <div key='input-field-event_type'>
                 <label>event_grading_format</label>
                 <select id="event_grading_format" name='event_grading_format' 
-                    onChange= {handleFormInput} className='form-control'>
+                    onChange= {handleFormInput} className='form-control'
+                    style={{backgroundColor:  '#96c0ca'}}>
                     <option value= {letter_grade} selected>letter grade</option>
                     <option value= {presentation}> presentation </option>
                    
@@ -178,12 +209,38 @@ function AddTrmsComponent(props: PropsFromRedux) {
             
                 ></input>
             </div>
-            <button className='btn btn-primary'  onClick={() => {
-                // props.trms['pro_reimbursement'] = props.trms['event_cost']*weight;
-                alert(JSON.stringify(props.trms));
-                submitForm()} }>
-                Create Trms
-            </button>
+
+            <hr />
+            <h4 style={{fontStyle: 'italic'}}> Fields to be updated  </h4>
+            {UPDATEFIELDS.map((fieldName) => {
+                return (
+                    <div key={'input-field-' + fieldName}>
+                        <label>{fieldName}</label>
+                        <input
+                            type='text'
+                            className='form-control'
+                            name={fieldName}
+                            id={'tr_' + fieldName}
+                            value={(props.trms as any)[fieldName]}
+                        ></input>
+                    </div>
+                );
+            })}
+
+
+            {  (timeLapse > 7) &&
+
+                <button className='btn btn-primary'  onClick={() => {
+                    // props.trms['pro_reimbursement'] = props.trms['event_cost']*weight;
+                    
+
+                    submitForm()} }>
+                    Create Trms
+                </button>
+
+            }
+           
+            </div>
         </div>
     );
 }

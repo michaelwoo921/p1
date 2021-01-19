@@ -8,8 +8,8 @@ import { thunkGetTrmss, thunkGetUser } from '../thunks';
 
 function groupIntoThrees(trmss: Trms[]): Trms[][] {
     let arr: Trms[][] = [];
-    for (let i = 0; i < trmss.length / 3; i++) {
-        arr.push(trmss.slice(i * 3, (i + 1) * 3));
+    for (let i = 0; i < trmss.length; i++) {
+        arr.push(trmss.slice(i , (i + 1) ));
     }
 
     return arr;

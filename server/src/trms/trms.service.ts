@@ -48,16 +48,21 @@ class TrmsService{
                 'date_created': trms.date_created
             },
             UpdateExpression: 
-            'set #approval=:ap, #pro_reimbursement=:p, #event_cost =:ec',
+            'set #approval=:ap, #pro_reimbursement=:p, #attachments=:at, #comments=:co, #grade=:gr',
             ExpressionAttributeValues: {
                 ':ap': trms.approval,
                 ':p': trms.pro_reimbursement,
-                ':ec': trms.event_cost
+                ':at': trms.attachments,
+                ':co': trms.comments,
+                ':gr': trms.grade,
             },
             ExpressionAttributeNames: {
                 '#approval': 'approval', 
                 '#pro_reimbursement': 'pro_reimbursement',
-                '#event_cost': 'event_cost'
+                '#attachments': 'attachments',
+                '#comments': 'comments',
+                '#grade': 'grade',
+
             },
             ReturnValue: 'UPDATED_NEW'
         };
