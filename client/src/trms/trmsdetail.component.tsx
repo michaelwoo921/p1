@@ -53,6 +53,7 @@ export default function TrmsDetailComponent(
                 
             </div>
             { ((userContext.role === 'Employee') || (userContext.role === 'Supervisor'))  && 
+                (trms.approval.sup.status ==='') &&
                 <>
                     <Link
                         className='btn btn-secondary'

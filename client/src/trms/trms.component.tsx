@@ -15,7 +15,7 @@ function TrmsComponent(props: TrmsProps) {
     function goToTrms() {
         history.push('/trmss/'+props.data.name + '/' + props.data.date_created);
     }
-    const timeLapse: number = calculateTimeLapseInDays(formatDate(new Date()), props.data.event_start_date)
+    const timeLapse: number = calculateTimeLapseInDays(props.data.event_start_date, formatDate(new Date()))
    
     return (
         <div className='col trms card' style={{backgroundColor:  '#96c0ca'}}>
@@ -33,10 +33,8 @@ function TrmsComponent(props: TrmsProps) {
                 <h4>Approval Status:</h4>
 
                 {props.data.role ==='Employee' ? <p> Status: {props.data.approval.sup.status==='' ? 'Not reviewed ' : props.data.approval.sup.status } by {props.data.supervisor_name } </p> : '' } 
-                <p> Status:  {props.data.approval.head.status==='' ? 'Not reviewed ' : props.data.approval.head.status } 
-                by Department Head </p>
-                <p> Status:  {props.data.approval.benco.status === '' ? 'Not reviewed ' : props.data.approval.benco.status} 
-                by Benco </p>
+                <p> Status:  {props.data.approval.head.status==='' ? 'Not reviewed ' : props.data.approval.head.status } by Department Head </p>
+                <p> Status:  {props.data.approval.benco.status === '' ? 'Not reviewed ' : props.data.approval.benco.status}  by Benco </p>
 
                 <p> Approval additional Info:
                     {props.data.approval.sup.additional_info}<br /> 
@@ -45,7 +43,7 @@ function TrmsComponent(props: TrmsProps) {
                 </p>
                 
                 <p className="text-danger"> {(timeLapse>0) && (timeLapse < 14)
-                &&  `Urgent: Course starts in ${timeLapse} days. Please approve`  }
+                &&  `Urgent: Course started  ${timeLapse} days ago. Please approve`  }
                   </p>
             
                 

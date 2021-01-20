@@ -24,6 +24,7 @@ const connector = connect(trmsProp, mapDispatch);
 
 // Function Component
 // get the types of the props we created above so we can tell our component about them.
+
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function AddTrmsComponent(props: PropsFromRedux) {
@@ -41,7 +42,6 @@ function AddTrmsComponent(props: PropsFromRedux) {
         props.updateTrms(tr);
     }
     function submitForm() {
-        let timeLapse = calculateTimeLapseInDays(formatDate(new Date()), props.trms.event_start_date);
    
         
         let u ={ ...user};
@@ -72,7 +72,6 @@ function AddTrmsComponent(props: PropsFromRedux) {
     // props.trms['event_type'] = eventRefTable[0].type;
     props.trms['event_grading_format'] = letter_grade;
     let fundAvailable = user.fund_available;
-    let  timeLapse: number = 14;
     return (
         <div className='col trms card' style={{backgroundColor:  '#96c0ca'}}
         >
@@ -232,7 +231,7 @@ function AddTrmsComponent(props: PropsFromRedux) {
             })}
 
 
-            {  (timeLapse > 7) &&
+            {  ( calculateTimeLapseInDays(formatDate(new Date()), props.trms.event_start_date) > 7) &&
 
                 <button className='btn btn-primary'  onClick={() => {
                     // props.trms['pro_reimbursement'] = props.trms['event_cost']*weight;
