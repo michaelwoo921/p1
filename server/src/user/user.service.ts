@@ -67,16 +67,18 @@ class UserService {
             Key: {
                 'name': user.name
             },
-            UpdateExpression: 'set #password = :p, #fund = :f, #year = :y',
+            UpdateExpression: 'set #password = :p, #fund = :f, #year = :y, #fund_available =:fa',
             ExpressionAttributeValues: {
                 ':f': user.fund,
                 ':p': user.password,
-                ':y': user.year
+                ':y': user.year,
+                ':fa': user.fund_available,
             },
             ExpressionAttributeNames: {
                 '#password': 'password',
                 '#fund': 'fund',
-                '#year': 'year'
+                '#year': 'year',
+                '#fund_available': 'fund_available'
             },
             ReturnValues: 'UPDATED_NEW'
         };

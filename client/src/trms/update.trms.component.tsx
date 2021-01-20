@@ -16,20 +16,7 @@ interface Params {
     dt: string;
 }
 
-const options =[
-    { 
-        label:"Approve",
-        value: "approved"
-    },
-    {
-        label: "Reject",
-        value: "rejected"
-    },
-    {
-        label: "Info Needed",
-        value: ""
-    }
-]
+
 
 // Function Component
 function UpdateTrmsComponent(props: RouteComponentProps<Params>) {
@@ -38,6 +25,7 @@ function UpdateTrmsComponent(props: RouteComponentProps<Params>) {
     const user = useSelector((state : UserState)=> state.user);
 
     let [appValue, setAppValue]= useState('');
+  
     // alert(JSON.stringify(user));
     const dispatch = useDispatch();
     useEffect(()=>{
@@ -52,7 +40,7 @@ function UpdateTrmsComponent(props: RouteComponentProps<Params>) {
     const READFIELDS = ['name', 'supervisor_name', 'date_created', 'event_name', 'event_type', 'event_start_date', 'event_end_date',
     'event_location', 
    'event_description', 'event_cost','pro_reimbursement', 'event_grading_format']
-    const UPDATEFIELDS = ['grade', 'comment', 'attachments',  'approval'];
+    const UPDATEFIELDS = ['grade', 'comment', 'attachments'];
     
    const READFIELDSBYSUP = ['name', 'supervisor_name', 'date_created', 'event_name', 'event_type', 'event_start_date', 'event_end_date',
    'event_location', 
@@ -77,29 +65,54 @@ function UpdateTrmsComponent(props: RouteComponentProps<Params>) {
         dispatch(changeTrms(tr));
     }
     function submitForm() {
-        if( user.role==='Supervisor'){
-            trms.approval.sup.status = appValue;
-            trms.approval.sup.date = formatDate(new Date());
+        if(user.role==='Supervisor') {
+            let tr1 ={ ...trms};
+            tr1.approval.sup.status = appValue;
+            tr1.approval.sup.date = formatDate(new Date());
+
+            alert('trms:' + JSON.stringify(tr1.approval));
+            trmsService.updateTrms(tr1).then(() => {
+                dispatch(changeTrms(new Trms()));
+                setTimeout(()=> {
+                    console.log('Updating trms!')
+                    // call the callback function from the parent component so that it will re-render
+                    history.push('/trmss');
+                }, 1000);
+            });   
+
         }
         if( user.role ==='DeptHead'){
             trms.approval.head.status = appValue;
             trms.approval.head.date = formatDate(new Date()); 
+
+            alert('trms:' + JSON.stringify(trms.approval));
+            trmsService.updateTrms(trms).then(() => {
+                dispatch(changeTrms(new Trms()));
+                setTimeout(()=> {
+                    console.log('Updating trms!')
+                    // call the callback function from the parent component so that it will re-render
+                    history.push('/trmss');
+                }, 1000);
+               
+            });   
+
         }
         if(user.role==='Benco') {
             trms.approval.benco.status = appValue;
             trms.approval.benco.date = formatDate(new Date()); 
-        }
-        alert('trms:' + JSON.stringify(trms.approval));
 
-        trmsService.updateTrms(trms).then(() => {
-            dispatch(changeTrms(new Trms()));
-            console.log('Updating trms!')
-            // call the callback function from the parent component so that it will re-render
-            history.push('/trmss');
-        });
+            alert('trms:' + JSON.stringify(trms.approval));
+            trmsService.updateTrms(trms).then(() => {
+                dispatch(changeTrms(new Trms()));
+                console.log('Updating trms!')
+                // call the callback function from the parent component so that it will re-render
+                history.push('/trmss');
+            });   
+
+        }
         
-          
-        
+
+
 
     }
     return (
@@ -180,8 +193,31 @@ function UpdateTrmsComponent(props: RouteComponentProps<Params>) {
                 </>
             }
             {/*  user.name is supervisor and trms.name is Employee */}
-            {   (user.name === trms.supervisor_name) && (trms.role==='Employee') &&
-                (trms.approval.sup.status ==='') &&
+            {   
+                ((
+
+                (user.name === trms.supervisor_name) && (trms.role==='Employee') &&
+                (trms.approval.sup.status ==='') 
+                
+                ) || 
+                (
+                    (user.role==='DeptHead') && (trms.role==='Employee') && 
+                    ((trms.approval.sup.status ==='approved') || (trms.approval.sup.status === 'auto_approved'))
+
+                ) ||
+ 
+                (
+                    (user.role==='DeptHead') && (trms.role==='Supervisor') && 
+                    (trms.approval.head.status ==='') 
+                    
+                ) ||
+                (
+                    (user.role==='Benco') && 
+                    ((trms.approval.head.status ==='approved') || (trms.approval.head.status ==='auto_approved') )
+                
+                ))
+                
+                &&
                 <>
                 {READFIELDSBYSUP.map((fieldName: any) => {
                     return (
@@ -212,7 +248,7 @@ function UpdateTrmsComponent(props: RouteComponentProps<Params>) {
                     ></input>
                 </div>  
             
-                <div key={'input-field-approval'}>
+                {/* <div key={'input-field-approval'}>
                     <label>Approve</label>
 
                     <select value={appValue} onChange ={(e) => {
@@ -221,87 +257,32 @@ function UpdateTrmsComponent(props: RouteComponentProps<Params>) {
                         {options.map((option) =>(
                            <option value={option.value}> {option.label}</option> 
                         ))}
-                    </select>
-                </div>
+                </div> */}
+                {
+                    <div key='input-field-approval'>
+                               
+                    <button type="button" className="btn btn-primary mt-3 mr-3" 
+                        onClick ={ function(){ 
+                            setAppValue('approved');  submitForm()}}>
+                    Approve</button>
+                    <button type="button" className="btn btn-danger mt-3  mr-3" 
+                        onClick ={ function(){ 
+                            setAppValue('rejected');  submitForm()}}>Reject</button>
+                    <button type="button" className="btn btn-info mt-3" 
+                        onClick ={ function(){ 
+                            setAppValue('');  submitForm()}}> Request info</button>
+                    </div>
+
+                }
+             
+
+
+
+
+
                 </>
 
             }
-            {/*  user.name is DeptHead and trms.name is Employee and approved by sup or is sup */}
-             {
-                 (user.role==='DeptHead') && (trms.role==='Employee') && 
-                 ((trms.approval.sup.status ==='approved') || (trms.approval.sup.status === 'auto_approved')) &&
-                 setAppValue('') &&
-            
-                 <div key={'input-field-approval'}>
-                        <label>Approve</label>
-
-                        <select value={appValue} onChange ={(e) => {
-                            setAppValue(e.target.value); alert(e.target.value);
-                        }}>
-                            {options.map((option) =>(
-                                <option value={option.value}> {option.label}</option> 
-                            ))}
-                        </select>
-                </div>
-             } 
-
-            {
-                 (user.role==='DeptHead') && (trms.role==='Supervisor') && 
-                 (trms.approval.head.status ==='') &&
-                 setAppValue('') &&
-                 <div key={'input-field-approval'}>
-                    <label>Approve</label>
-
-                    <select value={appValue} onChange ={(e) => {
-                        setAppValue(e.target.value); alert(e.target.value);
-                    }}>
-                        {options.map((option) =>(
-                            <option value={option.value}> {option.label}</option> 
-                        ))}
-                    </select>
-                </div>
-             }
-
-            {/* user.name is benco and trms.name is approved by DeptHead  */}
-
-            {
-                 (user.role==='Benco') && 
-                 ((trms.approval.head.status ==='approved') || (trms.approval.head.status ==='auto_approved') ) &&
-                 setAppValue('') &&
-                 <div key={'input-field-approval'}>
-                    <label>Approve</label>
-
-                    <select value={appValue} onChange ={(e) => {
-                        setAppValue(e.target.value); alert(e.target.value); }}>
-                        {options.map((option) =>(
-                            <option value={option.value}> {option.label}</option> 
-                        ))}
-                    </select>
-                </div>
-             }
-
-
-            { (trms.name === user.name)  && 
-            <div key={'input-field-attachments'}>
-                <label> File Attachments</label>
-                <input
-                            type='file'
-                            className='form-control'
-                            style={{backgroundColor:  '#96c0ca'}}
-                            name='attachments'
-                            id='tr_attachements'
-                            value={(trms as any)['attachments']}
-                            onChange={handleFormInput}
-                />
-             </div> 
-            }
-
-
-
-
-            <button className='btn btn-primary' onClick={submitForm}>
-                Update Trms
-            </button>
 
             </div>
         </div>

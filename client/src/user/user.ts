@@ -6,4 +6,5 @@ export class User {
     year=currentYear;
     supervisor_name='';
     fund: number=0;
+    fund_available =0;
 }

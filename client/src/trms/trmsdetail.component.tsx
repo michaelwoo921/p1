@@ -46,7 +46,7 @@ export default function TrmsDetailComponent(
 
             <div className='card-body' style={{backgroundColor:  '#96c0ca'}}>
                 <p className='name'>Submitted by {trms.name} on {trms.date_created}</p>
-                <p className='event_location'>Event: {trms.event_location} starts on {trms.event_start_date}</p>
+                <p className='event_location'>Event: {trms.event_name} starts on {trms.event_start_date} ends on {trms.event_end_date}</p>
                 <p className='event_location'>Event type: {trms.event_type}</p>
                 <p>Event Cost ${trms.event_cost}, Projected Reimbursement ${ trms.pro_reimbursement}</p>
                 <p className='attachments'> {trms.attachments} </p>
@@ -67,6 +67,51 @@ export default function TrmsDetailComponent(
                    
                 </>
             }
+            {/*  user is dept head */}
+            { (userContext.role ==='DeptHead') && ( trms.role==="Supervisor") && 
+
+                <>
+                <Link
+                    className='btn btn-secondary'
+                    to={'/trmss/' + trms.name + '/' + trms.date_created +'/update'}
+                >
+                    Update Trms
+                </Link>
+              
+                </>                       
+            }
+
+            { (userContext.role ==='DeptHead') && ( trms.role==="Employee") && 
+                ((trms.approval.sup.status ==='approved') ||  (trms.approval.sup.status ==='auto_approved')                  )&&
+
+                <>
+                <Link
+                    className='btn btn-secondary'
+                    to={'/trmss/' + trms.name + '/' + trms.date_created +'/update'}
+                >
+                    Update Trms
+                </Link>
+
+                </>                       
+            }
+            {/* user is benco  */}
+
+            { 
+                (userContext.role==='Benco') && (
+                    ( trms.approval.head.status==='approved') || ( trms.approval.head.status==='auto_approved')
+
+                ) &&
+                <>
+                <Link
+                    className='btn btn-secondary'
+                    to={'/trmss/' + trms.name + '/' + trms.date_created +'/update'}
+                >
+                    Update Trms
+                </Link>
+
+                </>  
+            }
+
         </div>
     );
 }

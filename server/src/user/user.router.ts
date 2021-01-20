@@ -52,13 +52,15 @@ router.put('/', async function(req: any,res,next){
     //reset fund for the new year
     if(Number(current_year)  > u.year ){
       u.fund=1000;
+      u.fund_available =1000;
       u.year = current_year;
     }
 
     logger.debug(u, 'after change');
     if(typeof(u.name)=== 'string' && typeof(u.password) === 'string' && u.name !=='' 
-    && u.password !== '' && req.body && req.body.fund){
+    && u.password !== '' && req.body && req.body.fund && req.body.fund_available){
         u.fund= Number(req.body.fund);
+        u.fund_available = Number(req.body.fund_available);
         await user.updateUser(u);
         setTimeout(()=> { res.redirect('/users');}, 1000);
     }

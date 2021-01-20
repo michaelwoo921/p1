@@ -10,6 +10,7 @@ import { eventRefTable } from '../eventRefTable';
 import { useSelector} from 'react-redux';
 import { letter_grade, presentation} from '../constants';
 import  formatDate, { calculateTimeLapseInDays} from '../formatDate';
+import userService from '../user/user.service';
 
 
 // This is the prop I want to connect from redux
@@ -41,19 +42,22 @@ function AddTrmsComponent(props: PropsFromRedux) {
     }
     function submitForm() {
         let timeLapse = calculateTimeLapseInDays(formatDate(new Date()), props.trms.event_start_date);
-        if(timeLapse <7){
-            alert('You have to submit at least 7 days before the event start date');
+   
+        
+        let u ={ ...user};
+        if(props.trms.pro_reimbursement){
+            u.fund_available = user.fund_available - Number(props.trms.pro_reimbursement);
         }
-        else {
-            alert('successfully created the form: ' + JSON.stringify(props.trms));
-            trmsService.addTrms(props.trms).then(() => {
-                props.updateTrms(new Trms());
-                // call the callback function from the parent component so that it will re-render
-                history.push('/trmss');
-            });
+        userService.update(u).then(()=> {}).catch(() => {});
+        
+        trmsService.addTrms(props.trms).then(() => {
+            props.updateTrms(new Trms());
+            // call the callback function from the parent component so that it will re-render
+            history.push('/trmss');
+        });
 
 
-        }
+        
      
     }
 
@@ -67,7 +71,7 @@ function AddTrmsComponent(props: PropsFromRedux) {
     let weight =0;
     // props.trms['event_type'] = eventRefTable[0].type;
     props.trms['event_grading_format'] = letter_grade;
-    let fundAvailable = user.fund;
+    let fundAvailable = user.fund_available;
     let  timeLapse: number = 14;
     return (
         <div className='col trms card' style={{backgroundColor:  '#96c0ca'}}

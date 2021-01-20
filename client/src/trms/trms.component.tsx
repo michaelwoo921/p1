@@ -32,8 +32,7 @@ function TrmsComponent(props: TrmsProps) {
    
                 <h4>Approval Status:</h4>
 
-                {props.data.role ==='Employee' ? <p> Status: {props.data.approval.sup.status==='' ? 'Not reviewed ' : props.data.approval.sup.status } 
-                     by {props.data.supervisor_name } </p> : '' } 
+                {props.data.role ==='Employee' ? <p> Status: {props.data.approval.sup.status==='' ? 'Not reviewed ' : props.data.approval.sup.status } by {props.data.supervisor_name } </p> : '' } 
                 <p> Status:  {props.data.approval.head.status==='' ? 'Not reviewed ' : props.data.approval.head.status } 
                 by Department Head </p>
                 <p> Status:  {props.data.approval.benco.status === '' ? 'Not reviewed ' : props.data.approval.benco.status} 
