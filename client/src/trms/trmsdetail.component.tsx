@@ -69,6 +69,7 @@ export default function TrmsDetailComponent(
             }
             {/*  user is dept head */}
             { (userContext.role ==='DeptHead') && ( trms.role==="Supervisor") && 
+                    (trms.approval.head.status ==='') &&
 
                 <>
                 <Link
@@ -82,25 +83,26 @@ export default function TrmsDetailComponent(
             }
 
             { (userContext.role ==='DeptHead') && ( trms.role==="Employee") && 
-                ((trms.approval.sup.status ==='approved') ||  (trms.approval.sup.status ==='auto_approved')                  )&&
-
+                ((trms.approval.sup.status ==='approved') ||  (trms.approval.sup.status ==='auto_approved') )&&
+                (trms.approval.head.status === '') &&
                 <>
-                <Link
-                    className='btn btn-secondary'
-                    to={'/trmss/' + trms.name + '/' + trms.date_created +'/update'}
-                >
-                    Update Trms
-                </Link>
+                    <Link
+                        className='btn btn-secondary'
+                        to={'/trmss/' + trms.name + '/' + trms.date_created +'/update'}
+                    >
+                        Update Trms
+                    </Link>
 
                 </>                       
             }
+
             {/* user is benco  */}
 
             { 
                 (userContext.role==='Benco') && (
                     ( trms.approval.head.status==='approved') || ( trms.approval.head.status==='auto_approved')
 
-                ) &&
+                ) && (trms.approval.benco.status==='')  &&
                 <>
                 <Link
                     className='btn btn-secondary'

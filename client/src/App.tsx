@@ -28,9 +28,6 @@ function App() {
                 <BrowserRouter>
                     <RouterComponent></RouterComponent>
                 </BrowserRouter>
-             
-                <button type="submit" onClick={() => setCond(!cond)}>Click me</button>
-                <div >{ cond? <TemporaryComponent />  : null}</div>
                 
             </div>
 
