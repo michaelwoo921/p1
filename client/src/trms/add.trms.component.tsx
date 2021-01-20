@@ -231,7 +231,7 @@ function AddTrmsComponent(props: PropsFromRedux) {
             })}
 
 
-            {  ( calculateTimeLapseInDays(formatDate(new Date()), props.trms.event_start_date) > 7) &&
+            {  ( calculateTimeLapseInDays(formatDate(new Date()), props.trms.event_start_date) > 7) ?
 
                 <button className='btn btn-primary'  onClick={() => {
                     // props.trms['pro_reimbursement'] = props.trms['event_cost']*weight;
@@ -240,9 +240,10 @@ function AddTrmsComponent(props: PropsFromRedux) {
                     submitForm()} }>
                     Create Trms
                 </button>
-
+                
+                : <p className= " text-danger mt-1"> Submit 7 days before the event </p>
             }
-           
+            
             </div>
         </div>
     );
