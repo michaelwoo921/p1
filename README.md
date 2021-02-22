@@ -1,4 +1,4 @@
-# Tuition ReimburseMent Management System (TRMS)
+# Tuition ReimburseMent Management System
 
 ## Project Description
 
